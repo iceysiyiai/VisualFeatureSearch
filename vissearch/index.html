@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground Highlight widget</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <p id="predict">
+        <h3>Prediction class: </h3>
+
+
+    <p>
+    <div class="container" style="height: 300px; width: 300px">
+      <div
+        class="image"
+        style="background-image: url(car.jpg); height: 300px; width: 300px"
+      ></div>
+      <canvas
+        id="drawCanvas_{N}"
+        class="overlay"
+        style="z-index: 10; width: 300px; height: 300px"
+      ></canvas>
+    </div>
+    <svg width="30" height="200">
+        <rect
+          width="30"
+          height="200"
+          style="fill: green; stroke-width: 2; stroke: rgb(0, 0, 0)"
+        />
+      </svg>
+    </p>
+
+    <br />
+    <button id="resetBtn_{N}">Reset</button>
+
+    <script>
+      (function () {
+        let resetBtn = document.getElementById("resetBtn_{N}");
+        let drawCanvas = document.getElementById("drawCanvas_{N}");
+
+        drawCanvas.width = 300;
+        drawCanvas.height = 300;
+        let ctx = drawCanvas.getContext("2d");
+
+        let drawing = false;
+
+        function mouseDown() {
+          drawing = true;
+        }
+
+        function mouseUp() {
+          drawing = false;
+          if ("{callName}" !== "None") {
+            executeCallback("{callName}", drawCanvas.toDataURL());
+          }
+        }
+
+        function handleMove(e) {
+          if (!drawing) return;
+          ctx.fillStyle = "#fff";
+          ctx.beginPath();
+          ctx.arc(e.offsetX, e.offsetY, { hlghtRad }, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+
+        function reset() {
+          ctx.clearRect(0, 0, { sz }, { sz });
+          if ("{callName}" !== "None") {
+            executeCallback("{callName}", drawCanvas.toDataURL());
+          }
+        }
+
+        drawCanvas.onmousedown = mouseDown;
+        drawCanvas.onmouseup = mouseUp;
+        drawCanvas.onmousemove = handleMove;
+
+        resetBtn.onclick = reset;
+      })();
+    </script>
+  </body>
+</html>
