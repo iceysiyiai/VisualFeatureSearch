@@ -12,7 +12,6 @@
     <p id="predict">
         <h3>Prediction class: </h3>
 
-
     <p>
     <div class="container" style="height: 300px; width: 300px">
       <div
@@ -20,7 +19,7 @@
         style="background-image: url(car.jpg); height: 300px; width: 300px"
       ></div>
       <canvas
-        id="drawCanvas_{N}"
+        id="drawCanvas_6"
         class="overlay"
         style="z-index: 10; width: 300px; height: 300px"
       ></canvas>
@@ -35,12 +34,25 @@
     </p>
 
     <br />
-    <button id="resetBtn_{N}">Reset</button>
+    <button id="resetBtn_6">Reset</button>
 
     <script>
+    function isCallbackSupported() {
+        return (typeof Jupyter !== 'undefined') || (typeof google !== 'undefined');
+    }
+
+    function executeCallback(function_name, data) {
+        if (typeof Jupyter !== 'undefined') {
+            let call_statement = function_name + '("' + data + '")';
+            Jupyter.notebook.kernel.execute(call_statement);
+        } else if (typeof google !== 'undefined') {
+            google.colab.kernel.invokeFunction(function_name, [data], {});
+        }
+    }
+
       (function () {
-        let resetBtn = document.getElementById("resetBtn_{N}");
-        let drawCanvas = document.getElementById("drawCanvas_{N}");
+        let resetBtn = document.getElementById("resetBtn_6");
+        let drawCanvas = document.getElementById("drawCanvas_6");
 
         drawCanvas.width = 300;
         drawCanvas.height = 300;
@@ -63,12 +75,12 @@
           if (!drawing) return;
           ctx.fillStyle = "#fff";
           ctx.beginPath();
-          ctx.arc(e.offsetX, e.offsetY, { hlghtRad }, 0, 2 * Math.PI);
+          ctx.arc(e.offsetX, e.offsetY, 20, 0, 2 * Math.PI);
           ctx.fill();
         }
 
         function reset() {
-          ctx.clearRect(0, 0, { sz }, { sz });
+          ctx.clearRect(0, 0, 300, 300);
           if ("{callName}" !== "None") {
             executeCallback("{callName}", drawCanvas.toDataURL());
           }
