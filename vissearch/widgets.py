@@ -79,9 +79,8 @@ HIGHLIGHT_HTML = '''
 
     function mouseUp() {{
         drawing = false;
-        alert("Hello");
         if('{callName}' !== 'None') {{
-            alert(executeCallback('{callName}', drawCanvas.toDataURL()));
+            console.log(executeCallback('{callName}', drawCanvas.toDataURL()));
         }}
     }}
 
