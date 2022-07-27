@@ -70,6 +70,7 @@ HIGHLIGHT_HTML = '''
 
     function mouseUp() {{
         drawing = false;
+        alert(0)
         if('{callName}' !== 'None') {{
             alert(executeCallback('{callName}', drawCanvas.toDataURL()));
         }}
