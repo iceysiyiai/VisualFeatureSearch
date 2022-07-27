@@ -19,6 +19,7 @@ CALLBACK_JS = '''
 '''
 
 HIGHLIGHT_HTML = '''
+<p>
 <div class="container" style="width: {sz}px; height: {sz}px;">
     <div class="image" style="background-image: url('{url}'); width: {sz}px; height: {sz}px;"></div>
     <canvas 
@@ -27,6 +28,14 @@ HIGHLIGHT_HTML = '''
         style="z-index: 10; width: {sz}px; height: {sz}px;"
     ></canvas>
 </div>
+<svg width="30" height="200">
+        <rect
+          width="30"
+          height="200"
+          style="fill: green; stroke-width: 2; stroke: rgb(0, 0, 0)"
+        />
+      </svg>
+</p>
 
 <br>
 <button id="resetBtn_{N}">Reset</button>
@@ -70,7 +79,7 @@ HIGHLIGHT_HTML = '''
 
     function mouseUp() {{
         drawing = false;
-        alert(0);
+        alert("Hello");
         if('{callName}' !== 'None') {{
             alert(executeCallback('{callName}', drawCanvas.toDataURL()));
         }}
