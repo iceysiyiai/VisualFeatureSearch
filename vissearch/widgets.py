@@ -28,8 +28,10 @@ HIGHLIGHT_HTML = '''
         style="z-index: 10; width: {sz}px; height: {sz}px;"
     ></canvas>
 </div>
-<svg width="30" height="200">
+<svg  width="30" height="200">
         <rect
+          y = "0"
+          id="barplot"
           width="30"
           height="200"
           style="fill: green; stroke-width: 2; stroke: rgb(0, 0, 0)"
@@ -77,11 +79,26 @@ HIGHLIGHT_HTML = '''
         drawing = true;
     }}
 
-    function mouseUp() {{
+    async function mouseUp() {{
         drawing = false;
         if('{callName}' !== 'None') {{
-            console.log(executeCallback('{callName}', drawCanvas.toDataURL()));
+            executeCallback('{callName}', drawCanvas.toDataURL());
+            let num = 50;
+            await fetch('out.txt')
+                .then(response => response.text())
+                .then(text => {{
+                    num = parseFloat(text);
+                }});
+            console.log(num);
+            document.getElementById('barplot').setAttribute("height", 200*num);
         }}
+    }}
+    
+    function processData(allText) {{
+        alert(allText);
+        
+        
+        return allText;
     }}
 
     function handleMove(e) {{
@@ -94,17 +111,20 @@ HIGHLIGHT_HTML = '''
 
     function reset() {{
         ctx.clearRect(0, 0, {sz}, {sz});
+        document.getElementById('barplot').setAttribute("height", 200);
         if('{callName}' !== 'None') {{
             executeCallback('{callName}', drawCanvas.toDataURL());
         }}
     }}
-
+    
     drawCanvas.onmousedown = mouseDown;
     drawCanvas.onmouseup = mouseUp;
     drawCanvas.onmousemove = handleMove;
 
     resetBtn.onclick = reset;
 }})();
+
+
 </script>
 '''
 
